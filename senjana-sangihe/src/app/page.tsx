@@ -1,6 +1,7 @@
 // /app/page.tsx
 import React from "react";
 import Header from "./components/header"; // Import Header component
+import Image from "next/image";
 
 export default function HomePage() {
   return (
@@ -8,13 +9,13 @@ export default function HomePage() {
       <Header />
       {/* Video Background */}
       <main className="relative w-full h-screen flex items-center justify-center bg-transparent">
-        <video
-          className="absolute top-0 left-0 w-full h-full object-cover z-0"
-          src="/videos/sample-video.mp4"
-          autoPlay
-          loop
-          muted
-        />
+        
+      <Image
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        src="/images/sample-image.jpg" // Make sure the path is correct
+        alt="Sangihe Island"
+        layout="fill" // This ensures the image covers the full container
+      />
 
         {/* Overlay Title */}
         <div className="relative z-10 text-center">
@@ -38,7 +39,7 @@ export default function HomePage() {
           </h2>
           <p className="mt-4 text-gray-600 text-lg">
             Sangihe Island is a hidden gem in Indonesia, offering breathtaking landscapes, rich culture, and unforgettable adventures. 
-            Whether you're looking to explore volcanic peaks, dive into vibrant coral reefs, or immerse yourself in local traditions, 
+            Whether you looking to explore volcanic peaks, dive into vibrant coral reefs, or immerse yourself in local traditions, 
             Sangihe Island has something special for everyone.
           </p>
         </div>
