@@ -2,24 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 .title {
   overflow: hidden;
 }
@@ -61,4 +43,95 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #494633;
+}
+
+@layer base {
+  :root {
+    --background: 45 50% 95%; /* approx #F5F0E3 (creamy) */
+    --foreground: 49 16% 20%; /* approx #494633 (dark olive) */
+
+    --card: 45 50% 95%;
+    --card-foreground: 49 16% 20%;
+
+    --popover: 45 50% 95%;
+    --popover-foreground: 49 16% 20%;
+
+    --primary: 49 16% 20%;       /* #494633 */
+    --primary-foreground: 45 50% 95%; /* #F5F0E3 */
+
+    --secondary: 36 52% 73%;     /* #E0C49A */
+    --secondary-foreground: 49 16% 20%;
+
+    --accent: 45 50% 95%;        /* creamy */
+    --accent-foreground: 49 16% 20%;
+
+    --muted: 42 20% 85%;         /* approx #C8C2B0 */
+    --muted-foreground: 49 10% 40%; /* approx #8C8973 */
+
+    --destructive: 0 45% 50%;    /* #B54747 */
+    --destructive-foreground: 45 50% 95%;
+
+    --success: 93 25% 58%;       /* #769656 */
+    --warning: 27 53% 64%;       /* #D4A373 */
+
+    --border: 42 20% 85%;
+    --input: 42 20% 85%;
+    --ring: 49 16% 20%;
+
+    --chart-1: 36 52% 73%;       /* beige gold */
+    --chart-2: 93 25% 58%;       /* olive green */
+    --chart-3: 49 10% 40%;       /* abu olive */
+    --chart-4: 27 53% 64%;       /* warm orange */
+    --chart-5: 0 45% 50%;        /* earthy red */
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 49 16% 20%;         /* dark olive */
+    --foreground: 45 50% 95%;         /* creamy */
+
+    --card: 49 16% 20%;
+    --card-foreground: 45 50% 95%;
+
+    --popover: 49 16% 20%;
+    --popover-foreground: 45 50% 95%;
+
+    --primary: 45 50% 95%;            /* creamy */
+    --primary-foreground: 49 16% 20%;
+
+    --secondary: 49 10% 40%;          /* abu olive */
+    --secondary-foreground: 45 50% 95%;
+
+    --accent: 49 10% 40%;
+    --accent-foreground: 45 50% 95%;
+
+    --muted: 49 10% 40%;
+    --muted-foreground: 42 20% 85%;
+
+    --destructive: 0 45% 30%;         /* lebih gelap dari #B54747 */
+    --destructive-foreground: 45 50% 95%;
+
+    --success: 93 25% 58%;
+    --warning: 27 53% 64%;
+
+    --border: 49 10% 40%;
+    --input: 49 10% 40%;
+    --ring: 36 52% 73%;
+
+    --chart-1: 45 50% 95%;
+    --chart-2: 93 25% 58%;
+    --chart-3: 27 53% 64%;
+    --chart-4: 280 20% 60%;
+    --chart-5: 0 45% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

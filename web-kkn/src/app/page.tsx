@@ -8,6 +8,7 @@ import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { fetchArticles } from '@/lib/api'
 import MapEmbed from './components/map'
+import CardDemo from '@/components/cards-demo-2'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -106,8 +107,9 @@ export default function Home() {
         <h2 className="text-3xl md:text-5xl font-semibold text-center mb-12">
           Latest from <span className="italic">Our Blog</span>
         </h2>
+        <CardDemo />
 
-        {loading ? (
+        {/* {loading ? (
           // Loading State
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[...Array(3)].map((_, i) => (
@@ -130,7 +132,7 @@ export default function Home() {
               />
             ))}
           </div>
-        )}
+        )} */}
       </section>
 
       {/* ---- About Us Section ---- */}
