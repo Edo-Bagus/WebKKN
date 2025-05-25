@@ -23,3 +23,42 @@ body {
 .title {
   overflow: hidden;
 }
+
+/* app/globals.css */
+
+.clip-media {
+  mask-image: repeating-linear-gradient(
+    -5deg,
+    black 0,
+    black 10%,
+    transparent 10%,
+    transparent 15%
+  );
+  -webkit-mask-image: repeating-linear-gradient(
+    -5deg,
+    black 0,
+    black 10%,
+    transparent 10%,
+    transparent 15%
+  );
+}
+
+/* src/app/globals.css */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #E0C49A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #494633; /* warna biru */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #494633;
+}
