@@ -1,14 +1,14 @@
 'use client'
 
 import { Navbar } from '@/app/components/navbar'
-import { BlogCard } from '@/app/components/blogcards'
+import  BlogCard  from '@/components/ui/blog-card'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { fetchArticles } from '@/lib/api'
 import MapEmbed from './components/map'
-import CardDemo from '@/components/cards-demo-2'
+import { Carousel } from '@/components/ui/carousel'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -24,6 +24,28 @@ export default function Home() {
   const router = useRouter()
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
+  const slideData = [
+    {
+      title: "Mystic Mountains",
+      button: "Explore Component",
+      src: "https://images.unsplash.com/photo-1494806812796-244fe51b774d?q=80&w=3534&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      title: "Urban Dreams",
+      button: "Explore Component",
+      src: "https://images.unsplash.com/photo-1518710843675-2540dd79065c?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      title: "Neon Nights",
+      button: "Explore Component",
+      src: "https://images.unsplash.com/photo-1590041794748-2d8eb73a571c?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      title: "Desert Whispers",
+      button: "Explore Component",
+      src: "https://images.unsplash.com/photo-1679420437432-80cfbf88986c?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+  ];
 
   useEffect(() => {
     async function loadArticles() {
@@ -107,9 +129,9 @@ export default function Home() {
         <h2 className="text-3xl md:text-5xl font-semibold text-center mb-12">
           Latest from <span className="italic">Our Blog</span>
         </h2>
-        <CardDemo />
+        {/* <BlogCard /> */}
 
-        {/* {loading ? (
+        {loading ? (
           // Loading State
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[...Array(3)].map((_, i) => (
@@ -121,18 +143,21 @@ export default function Home() {
           </div>
         ) : (
           // Blog List
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {blogs.map((blog) => (
-              <BlogCard
-                key={blog._id}
-                title={blog.title}
-                description={blog.description}
-                slug={blog.slug}
-                imageUrl={blog.imageUrl}
-              />
-            ))}
+          // <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          //   {blogs.map((blog) => (
+          //     <BlogCard
+          //       key={blog._id}
+          //       title={blog.title}
+          //       description={blog.description}
+          //       slug={blog.slug}
+          //       imageUrl={blog.imageUrl }
+          //     />
+          //   ))}
+          // </div>
+          <div className="relative overflow-hidden w-full h-full py-20">
+            <Carousel slides={slideData} />
           </div>
-        )} */}
+        )}
       </section>
 
       {/* ---- About Us Section ---- */}

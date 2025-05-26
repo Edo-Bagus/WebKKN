@@ -5,7 +5,7 @@ import { Navbar } from "../components/navbar";
 export default function TimelineDemo() {
   const data = [
     {
-      title: "2024",
+      title: "Week 1",
       content: (
         <div>
           <p className="mb-8 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
@@ -45,7 +45,7 @@ export default function TimelineDemo() {
       ),
     },
     {
-      title: "Early 2023",
+      title: "Week 2",
       content: (
         <div>
           <p className="mb-8 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
@@ -90,7 +90,7 @@ export default function TimelineDemo() {
       ),
     },
     {
-      title: "Changelog",
+      title: "Week 3",
       content: (
         <div>
           <p className="mb-4 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
