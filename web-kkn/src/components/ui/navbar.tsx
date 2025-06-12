@@ -52,7 +52,7 @@ export function Navbar() {
           Projects
         </Link>
         <Link href="/about" className="hover:underline text-secondary">
-          About
+          Our Team
         </Link>
       </div>
     </nav>

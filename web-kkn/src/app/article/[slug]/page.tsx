@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { Navbar } from "@/app/components/navbar";
+import { Navbar } from "@/components/ui/navbar";
 import { getArticleBySlug } from "@/lib/api";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
+import MemberCard from "@/components/ui/member-card";
 
 interface Params {
   params: { slug: string };
@@ -45,7 +46,7 @@ export default async function ArtikelPage({ params }: Params) {
             <Image
               src={article.image || "/images/dummy.jpg"}
               alt="Gambar Artikel"
-              layout="fill"
+              fill
               objectFit="cover"
             />
           </div>
@@ -61,21 +62,13 @@ export default async function ArtikelPage({ params }: Params) {
               dangerouslySetInnerHTML={{ __html: contentHtml }}
             />
           </div>
+          
+          {!article ? (
+            <p>Loading team members...</p>
+          ) : (
+            <MemberCard article={article} />
+          )}
 
-          <div className="col-span-1">
-            <div className="bg-[#3E3B32] rounded-lg p-6 shadow-lg text-center">
-              <div className="w-24 h-24 mx-auto mb-4 relative">
-                <Image
-                  src={article.author.photoUrl || "/images/person.jpg"}
-                  alt="Author"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-full"
-                />
-              </div>
-              <h3 className="text-xl font-semibold text-white">{article.author.name}</h3>
-            </div>
-          </div>
         </section>
       </main>
     </div>

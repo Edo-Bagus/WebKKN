@@ -6,27 +6,29 @@ import { IArticle } from '@/models/Article';
 export async function GET(request: Request) {
   try {
     await connectDB();
-
     const { searchParams } = new URL(request.url);
 
-    // Ambil parameter sort dan limit dari query
-    const sortParam = searchParams.get('sort') || 'desc'; // default: desc
-    const limitParam = searchParams.get('limit');
-
-    // Ubah sort jadi format MongoDB
+    const search = searchParams.get('search')?.toLowerCase() || '';
+    const categories = searchParams.get('categories')?.split(',') || [];
+    const people = searchParams.get('people')?.split(',') || [];
+    const sortParam = searchParams.get('sort') || 'desc'; // 'asc' or 'desc'
     const sortOrder = sortParam === 'asc' ? 1 : -1;
 
-    let query = Article.find().sort({ date: sortOrder });
+    const query: any = {};
 
-    // Jika ada limit, batasi jumlah data yang diambil
-    if (limitParam) {
-      const limit = parseInt(limitParam, 10);
-      if (!isNaN(limit)) {
-        query = query.limit(limit);
-      }
+    if (search) {
+      query.title = { $regex: search, $options: 'i' };
     }
 
-    const articles = await query.exec();
+    if (categories.length > 0 && categories[0] !== '') {
+      query.category = { $in: categories };
+    }
+
+    if (people.length > 0 && people[0] !== '') {
+      query.people = { $in: people };
+    }
+
+    const articles = await Article.find(query).sort({ date: sortOrder }).exec();
 
     return NextResponse.json(articles, { status: 200 });
   } catch (error) {

@@ -1,14 +1,13 @@
 'use client'
 
-import { Navbar } from '@/app/components/navbar'
-import  BlogCard  from '@/components/ui/blog-card'
+import { Navbar } from '@/components/ui/navbar'
 import { useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { fetchArticles } from '@/lib/api'
-import MapEmbed from './components/map'
-import { Carousel } from '@/components/ui/carousel'
+import { BlogCarousel } from '@/components/ui/blog-carousel'
+import { DraggableCardBody, DraggableCardContainer } from '@/components/ui/draggable-card'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -16,7 +15,7 @@ interface Blog {
   _id: string;
   title: string;
   description: string;
-  imageUrl: string;
+  thumbnailUrl: string;
   slug: string;
 }
 
@@ -24,26 +23,49 @@ export default function Home() {
   const router = useRouter()
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
-  const slideData = [
+
+  const items = [
     {
-      title: "Mystic Mountains",
-      button: "Explore Component",
-      src: "https://images.unsplash.com/photo-1494806812796-244fe51b774d?q=80&w=3534&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      title: "Tyler Durden",
+      image:
+        "https://images.unsplash.com/photo-1732310216648-603c0255c000?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      className: "absolute top-10 left-[20%] rotate-[-5deg]",
     },
     {
-      title: "Urban Dreams",
-      button: "Explore Component",
-      src: "https://images.unsplash.com/photo-1518710843675-2540dd79065c?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      title: "The Narrator",
+      image:
+        "https://images.unsplash.com/photo-1697909623564-3dae17f6c20b?q=80&w=2667&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      className: "absolute top-40 left-[25%] rotate-[-7deg]",
     },
     {
-      title: "Neon Nights",
-      button: "Explore Component",
-      src: "https://images.unsplash.com/photo-1590041794748-2d8eb73a571c?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      title: "Iceland",
+      image:
+        "https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=2600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      className: "absolute top-5 left-[40%] rotate-[8deg]",
     },
     {
-      title: "Desert Whispers",
-      button: "Explore Component",
-      src: "https://images.unsplash.com/photo-1679420437432-80cfbf88986c?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      title: "Japan",
+      image:
+        "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=3648&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      className: "absolute top-32 left-[55%] rotate-[10deg]",
+    },
+    {
+      title: "Norway",
+      image:
+        "https://images.unsplash.com/photo-1421789665209-c9b2a435e3dc?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      className: "absolute top-20 right-[35%] rotate-[2deg]",
+    },
+    {
+      title: "New Zealand",
+      image:
+        "https://images.unsplash.com/photo-1505142468610-359e7d316be0?q=80&w=3070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      className: "absolute top-24 left-[45%] rotate-[-7deg]",
+    },
+    {
+      title: "Canada",
+      image:
+        "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      className: "absolute top-8 left-[30%] rotate-[4deg]",
     },
   ];
 
@@ -125,7 +147,7 @@ export default function Home() {
       </section>
 
       {/* ---- Blog Section ---- */}
-      <section className="px-8 md:px-24 py-16">
+      <section className="px-8 md:px-24 py-16 overflow-hidden">
         <h2 className="text-3xl md:text-5xl font-semibold text-center mb-12">
           Latest from <span className="italic">Our Blog</span>
         </h2>
@@ -150,44 +172,51 @@ export default function Home() {
           //       title={blog.title}
           //       description={blog.description}
           //       slug={blog.slug}
-          //       imageUrl={blog.imageUrl }
+          //       imageUrl={blog.thumbnailUrl }
           //     />
           //   ))}
           // </div>
-          <div className="relative overflow-hidden w-full h-full py-20">
-            <Carousel slides={slideData} />
-          </div>
+          <BlogCarousel blogs={blogs}/>
+          // <div className="relative overflow-hidden w-full h-full py-20">
+          //   <Carousel slides={slideData} />
+          // </div>
         )}
       </section>
 
       {/* ---- About Us Section ---- */}
       <section className="px-8 md:px-24 py-16 text-center">
-        <h2 className="text-3xl md:text-5xl font-semibold mb-6">
+        <h2 className="text-3xl md:text-5xl font-semibold mb-4">
           Meet Our Team
         </h2>
-        <p className="text-base md:text-lg mb-8 max-w-2xl mx-auto">
-          We are a passionate group of students committed to making a positive impact in Tegalombo. 
-          Together through the Langkara Project, we aim to celebrate, preserve, and empower the local community.
-        </p>
-        <button 
-          onClick={() => router.push('/about')}
-          className="bg-[#E0C49A] text-[#494633] px-8 py-3 rounded-full text-lg hover:bg-[#d4ad7f] transition-colors"
-        >
-          Learn More About Us
-        </button>
-      </section>
+        <DraggableCardContainer className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-clip px-4 text-center">
+        <div>
+          <p className="text-base md:text-lg mb-6 max-w-2xl mx-auto">
+            We are a passionate group of students committed to making a positive impact in Tegalombo. 
+            Together through the Langkara Project, we aim to celebrate, preserve, and empower the local community.
+          </p>
+          <button 
+            onClick={() => router.push('/about')}
+            className="bg-secondary text-[#494633] px-8 py-3 rounded-full text-lg hover:bg-[#d4ad7f] transition-colors font-semibold"
+          >
+            Learn More About Us
+          </button>
+        </div>
 
-      {/* ---- Final CTA Section ---- */}
-      <section className="px-8 md:px-24 py-20 text-center">
-        <h2 className="text-3xl md:text-5xl font-semibold mb-6">
-          Ready to <span className="italic">Explore</span> Tegalombo?
-        </h2>
-        <p className="text-base md:text-lg mb-8 max-w-2xl mx-auto">
-          Join our community to uncover hidden destinations, preserve the rich culture, and make a difference together. Be part of the Langkara Project movement!
-        </p>
-        <button className="bg-[#E0C49A] text-[#494633] px-8 py-3 rounded-full text-lg hover:bg-[#333229] transition-colors">
-          Join the Movement
-        </button>
+        <div className="flex flex-wrap justify-center gap-8">
+          {items.map((item, index) => (
+            <DraggableCardBody key={item.title || index} className={item.className}>
+              <img
+                src={item.image}
+                alt={item.title}
+                className="pointer-events-none relative z-10 h-80 w-80 object-cover"
+              />
+              <h3 className="mt-4 text-center text-2xl font-bold text-neutral-700 dark:text-neutral-300">
+                {item.title}
+              </h3>
+            </DraggableCardBody>
+          ))}
+        </div>
+      </DraggableCardContainer>
       </section>
 
     </div>

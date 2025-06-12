@@ -1,9 +1,38 @@
 'use client'
 
-import { Navbar } from '@/app/components/navbar'
+import { Navbar } from '@/components/ui/navbar'
+import { AnimatedTestimonials } from '@/components/ui/animated-testimonials';
 import Link from 'next/link'
+import { useEffect, useState } from 'react';
 
 export default function About() {
+  const [teamTestimonials, setTeamTestimonials] = useState([])
+  
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        const res = await fetch('/api/team-members')
+        const data = await res.json()
+
+        const mapped = data.members.map((member: any) => ({
+          quote: `Proud to contribute to the development of Tegalombo through ${member.cluster}.`,
+          name: member.name,
+          designation: `${member.major} - ${member.faculty}`,
+          src: member.pictureUrl || '/images/person.jpg',
+          instagram: member.instagram,
+          linkedin: member.linkedIn,
+          email: member.email,
+        }))
+
+        setTeamTestimonials(mapped)
+      } catch (error) {
+        console.error('Error fetching team members:', error)
+      }
+    }
+
+    fetchTeamMembers()
+  }, [])
+
   return (
     <div className="bg-[#494633] min-h-screen text-[#F5F0E3]">
       <Navbar />
@@ -21,7 +50,7 @@ export default function About() {
         <div className="w-16 h-1 bg-gradient-to-r from-[#E0C49A] to-[#E0C49A] my-4"></div>
 
         {/* About Content */}
-        <section className="max-w-4xl mt-12 text-base md:text-lg leading-relaxed text-[#dcd6c9] space-y-6">
+        <section className="max-w-4xl mt-12 text-base md:text-lg leading-relaxed text-accent space-y-6">
           <p>
             We are a passionate team from Universitas Gadjah Mada participating in the KKN-PPM program,
             dedicating our efforts to Tegalombo's local development. Our focus lies in promoting eco-tourism,
@@ -39,6 +68,19 @@ export default function About() {
           </p>
         </section>
 
+        <section className="max-w-4xl mt-12 text-base md:text-lg leading-relaxed text-[#dcd6c9]">
+          <h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-6 italic">
+            Science
+          </h1>
+
+          {teamTestimonials.length === 0 ? (
+            <p>Loading team members...</p>
+          ) : (
+            <AnimatedTestimonials testimonials={teamTestimonials} />
+          )}
+        </section>
+
+        {/* About Content */}    
         {/* Back to Home Button */}
         <div className="mt-12">
           <Link href="/">
