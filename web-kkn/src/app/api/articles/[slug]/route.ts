@@ -7,7 +7,7 @@ export async function GET(req: NextRequest, context: { params: { slug: string } 
     await connectDB();
 
     const { slug } = await context.params;
-    const article = await Article.findOne({ slug });
+    const article = await Article.findOne({ slug }).populate("author").lean();
 
     if (!article) {
       return NextResponse.json({ error: 'Artikel tidak ditemukan' }, { status: 404 });

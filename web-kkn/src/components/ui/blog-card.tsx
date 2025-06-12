@@ -2,19 +2,24 @@
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import readingTime from "reading-time";
 
 interface BlogCardProps {
   title: string;
   description: string;
   slug: string;
-  imageUrl: string;
+  thumbnailUrl: string;
+  author: any;
+  readingTime: string;
 }
 
 export default function BlogCard({
   title,
   description,
   slug,
-  imageUrl,
+  thumbnailUrl,
+  author,
+  readingTime
 }: BlogCardProps) {
   return (
     <Link href={`/article/${slug}`} className="max-w-xs w-full group/card block">
@@ -22,7 +27,7 @@ export default function BlogCard({
         className={cn(
           "cursor-pointer overflow-hidden relative card h-96 rounded-md shadow-xl max-w-sm mx-auto flex flex-col justify-between p-4 bg-cover bg-center"
         )}
-        style={{ backgroundImage: `url(${imageUrl})` }}
+        style={{ backgroundImage: `url(${thumbnailUrl})` }}
       >
         {/* Darker Overlay */}
         <div className="absolute w-full h-full top-0 left-0 bg-black/70 transition duration-300 group-hover/card:bg-black/80 z-0"></div>
@@ -33,14 +38,14 @@ export default function BlogCard({
             height={100}
             width={100}
             alt="Avatar"
-            src="/images/person.jpg"
+            src={author.pictureUrl}
             className="h-10 w-10 rounded-full border-2 object-cover"
           />
           <div className="flex flex-col">
             <p className="font-normal text-base text-gray-50 relative z-10">
-              Manu Arora
+              {author.name}
             </p>
-            <p className="text-sm text-gray-400">2 min read</p>
+            <p className="text-sm text-gray-400">{readingTime}</p>
           </div>
         </div>
 

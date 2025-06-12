@@ -1,9 +1,4 @@
-import { Schema, Document, models, model } from 'mongoose';
-
-export interface IAuthor {
-  name: string;
-  photoUrl: string;
-}
+import { Schema, Document, models, model, Types } from 'mongoose';
 
 export interface IRelatedArticle {
   title: string;
@@ -16,11 +11,10 @@ export interface IArticle extends Document {
   date: Date;
   category: string;
   readingTime: string;
-  author: IAuthor;
+  author: Types.ObjectId; // refer to TeamMember
   thumbnailUrl: string;
   description: string;
   content: string;
-  relatedArticles: IRelatedArticle[];
 }
 
 const ArticleSchema = new Schema<IArticle>({
@@ -29,19 +23,10 @@ const ArticleSchema = new Schema<IArticle>({
   date: { type: Date, required: true },
   category: { type: String, required: true },
   readingTime: { type: String, required: true },
-  author: {
-    name: { type: String, required: true },
-    photoUrl: { type: String, required: true },
-  },
+  author: { type: Schema.Types.ObjectId, ref: 'TeamMember', required: true }, // Ref to TeamMember
   thumbnailUrl: { type: String, required: true },
   description: { type: String, required: true },
   content: { type: String, required: true },
-  relatedArticles: [
-    {
-      title: { type: String, required: true },
-      slug: { type: String, required: true },
-    },
-  ],
 });
 
 export default models.Article || model<IArticle>('Article', ArticleSchema);

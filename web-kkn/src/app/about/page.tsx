@@ -6,32 +6,44 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react';
 
 export default function About() {
-  const [teamTestimonials, setTeamTestimonials] = useState([])
-  
-  useEffect(() => {
-    const fetchTeamMembers = async () => {
-      try {
-        const res = await fetch('/api/team-members')
-        const data = await res.json()
+const [teamTestimonials, setTeamTestimonials] = useState([])
+const [saintekCluster, setSaintekCluster] = useState([])
+const [soshumCluster, setSoshumCluster] = useState([])
+const [agroCluster, setAgroCluster] = useState([])
+const [medikaCluster, setMedikaCluster] = useState([])
 
-        const mapped = data.members.map((member: any) => ({
-          quote: `Proud to contribute to the development of Tegalombo through ${member.cluster}.`,
-          name: member.name,
-          designation: `${member.major} - ${member.faculty}`,
-          src: member.pictureUrl || '/images/person.jpg',
-          instagram: member.instagram,
-          linkedin: member.linkedIn,
-          email: member.email,
-        }))
+useEffect(() => {
+  const fetchTeamMembers = async () => {
+    try {
+      const res = await fetch('/api/team-members')
+      const data = await res.json()
 
-        setTeamTestimonials(mapped)
-      } catch (error) {
-        console.error('Error fetching team members:', error)
-      }
+      const mapped = data.members.map((member: any) => ({
+        quote: `Proud to contribute to the development of Tegalombo through ${member.cluster}.`,
+        name: member.name,
+        designation: `${member.major} - ${member.faculty}`,
+        src: member.pictureUrl || '/images/person.jpg',
+        cluster: member.cluster,
+        instagram: member.instagram,
+        linkedin: member.linkedIn,
+        email: member.email,
+      }))
+
+      setTeamTestimonials(mapped)
+
+      // Split into clusters
+      setSaintekCluster(mapped.filter((m: any) => m.cluster === 'Saintek'))
+      setSoshumCluster(mapped.filter((m: any) => m.cluster === 'Soshum'))
+      setAgroCluster(mapped.filter((m: any) => m.cluster === 'Agro'))
+      setMedikaCluster(mapped.filter((m: any) => m.cluster === 'Medika'))
+
+    } catch (error) {
+      console.error('Error fetching team members:', error)
     }
+  }
 
-    fetchTeamMembers()
-  }, [])
+  fetchTeamMembers()
+}, [])
 
   return (
     <div className="bg-[#494633] min-h-screen text-[#F5F0E3]">
@@ -73,10 +85,37 @@ export default function About() {
             Science
           </h1>
 
-          {teamTestimonials.length === 0 ? (
+          {saintekCluster.length === 0 ? (
             <p>Loading team members...</p>
           ) : (
-            <AnimatedTestimonials testimonials={teamTestimonials} />
+            <AnimatedTestimonials testimonials={saintekCluster} />
+          )}
+          <h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-6 italic">
+            Social
+          </h1>
+
+          {soshumCluster.length === 0 ? (
+            <p>Loading team members...</p>
+          ) : (
+            <AnimatedTestimonials testimonials={soshumCluster} />
+          )}
+          <h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-6 italic">
+            Agro
+          </h1>
+
+          {agroCluster.length === 0 ? (
+            <p>Loading team members...</p>
+          ) : (
+            <AnimatedTestimonials testimonials={agroCluster} />
+          )}
+          <h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-6 italic">
+            Medical
+          </h1>
+
+          {medikaCluster.length === 0 ? (
+            <p>Loading team members...</p>
+          ) : (
+            <AnimatedTestimonials testimonials={medikaCluster} />
           )}
         </section>
 

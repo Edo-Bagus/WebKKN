@@ -3,6 +3,7 @@ import { Navbar } from "@/components/ui/navbar";
 import { getArticleBySlug } from "@/lib/api";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
+import Markdown from "react-markdown"
 import MemberCard from "@/components/ui/member-card";
 
 interface Params {
@@ -12,11 +13,6 @@ interface Params {
 export default async function ArtikelPage({ params }: Params) {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
-
-  const processedContent = await remark()
-    .use(remarkHtml)
-    .process(article.content);
-  const contentHtml = processedContent.toString();
 
 
   return (
@@ -34,7 +30,7 @@ export default async function ArtikelPage({ params }: Params) {
                 Kategori: {article.category}
               </span>
               <span className="bg-[#3E3B32] text-[#D1C9A0] px-3 py-1 rounded-full text-sm">
-                {article.readingTime} menit baca
+                {article.readingTime}
               </span>
               <span className="bg-[#3E3B32] text-[#D1C9A0] px-3 py-1 rounded-full text-sm">
                 Penulis: {article.author.name}
@@ -44,7 +40,7 @@ export default async function ArtikelPage({ params }: Params) {
 
           <div className="w-full h-64 md:h-80 relative rounded-lg overflow-hidden shadow-lg">
             <Image
-              src={article.image || "/images/dummy.jpg"}
+              src={article.thumbnailUrl || "/images/dummy.jpg"}
               alt="Gambar Artikel"
               fill
               objectFit="cover"
@@ -55,12 +51,9 @@ export default async function ArtikelPage({ params }: Params) {
         {/* Section 2 - Isi Artikel */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
           <div className="col-span-2 space-y-6">
-            <h2 className="text-2xl font-semibold text-primary">Isi Artikel</h2>
-            {/* Menggunakan dangerouslySetInnerHTML untuk menampilkan HTML yang sudah diparsing */}
-            <div
-              className="text-lg text-primary"
-              dangerouslySetInnerHTML={{ __html: contentHtml }}
-            />
+            <div className="prose text-primary">
+              <Markdown>{article.content}</Markdown>
+            </div>
           </div>
           
           {!article ? (

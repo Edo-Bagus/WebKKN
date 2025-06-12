@@ -1,15 +1,18 @@
-'use client'
+"use client";
 
-import { Navbar } from '@/components/ui/navbar'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { fetchArticles } from '@/lib/api'
-import { BlogCarousel } from '@/components/ui/blog-carousel'
-import { DraggableCardBody, DraggableCardContainer } from '@/components/ui/draggable-card'
+import { Navbar } from "@/components/ui/navbar";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { fetchArticles } from "@/lib/api";
+import { BlogCarousel } from "@/components/ui/blog-carousel";
+import {
+  DraggableCardBody,
+  DraggableCardContainer,
+} from "@/components/ui/draggable-card";
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
 interface Blog {
   _id: string;
@@ -20,7 +23,7 @@ interface Blog {
 }
 
 export default function Home() {
-  const router = useRouter()
+  const router = useRouter();
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -71,8 +74,8 @@ export default function Home() {
 
   useEffect(() => {
     async function loadArticles() {
-      const articles = await fetchArticles('desc', 3); // misalnya ambil 5 terbaru
-      const mapped = articles.map((article: any) => ({
+      const data = await fetchArticles("desc", 5); // misalnya ambil 5 terbaru
+      const mapped = data.articles.map((article: any) => ({
         _id: article._id,
         title: article.title,
         description: article.description,
@@ -91,7 +94,7 @@ export default function Home() {
       <Navbar />
 
       <main className="flex flex-col items-center justify-center text-center h-screen">
-        <div className='flex flex-col items-center justify-center text-center bg-primary text-secondary rounded-2xl p-6 m-4 h-[90%] w-[95%] max-w-8xl'>
+        <div className="flex flex-col items-center justify-center text-center bg-primary text-secondary rounded-2xl p-6 m-4 h-[90%] w-[95%] max-w-8xl">
           {/* Top Text */}
           <p className="text-sm mb-2">KKN PPM UGM 2025</p>
 
@@ -108,39 +111,27 @@ export default function Home() {
         </div>
       </main>
 
-      {/* ---- Horizontal Scroll Section ---- */}
-      {/* <section className="overflow-x-hidden overflow-y-hidden">
-        <div ref={containerRef} className="flex w-[200vw] h-screen">
-          <div className="panel w-screen h-screen bg-[#494633] flex items-center justify-center text-white text-5xl font-bold">
-            Section 1
-          </div>
-          <div className="panel w-screen h-screen bg-[#F5F0E3] flex items-center justify-center text-[#494633] text-5xl font-bold">
-            Section 2
-          </div>
-        </div>
-      </section> */}
-
       {/* What is Langkara Project section */}
-      <section className="relative flex flex-col md:flex-row items-center justify-between gap-12 px-8 md:px-24 py-16 h-screen overflow-hidden">
-
+      <section className="relative flex flex-col md:flex-row items-center justify-between gap-12 px-4 md:px-16 lg:px-32 py-16 min-h-[80vh] overflow-hidden">
         {/* Main Content */}
         <div className="flex-1 text-center md:text-left relative z-30">
           <h2 className="text-3xl md:text-5xl font-semibold mb-6">
             What is <span className="italic">Langkara</span> Project?
           </h2>
           <p className="text-base md:text-lg leading-relaxed">
-            Langkara Project is a community-driven initiative focused on preserving the culture,
-            nature, and hidden treasures of Tegalombo. Together, we build a sustainable future
-            while honoring the rich heritage of the region.
+            Langkara Project is a community-driven initiative focused on
+            preserving the culture, nature, and hidden treasures of Tegalombo.
+            Together, we build a sustainable future while honoring the rich
+            heritage of the region.
           </p>
         </div>
 
         <div className="flex-1 relative z-30">
           <div className="w-full h-64 md:h-96 rounded-lg shadow-lg overflow-hidden">
-            <img 
-              src="/images/dummy.jpg" 
-              alt="Deskripsi Gambar" 
-              className="w-full h-full object-cover" 
+            <img
+              src="/images/dummy.jpg"
+              alt="Deskripsi Gambar"
+              className="w-full h-full object-cover"
             />
           </div>
         </div>
@@ -164,22 +155,7 @@ export default function Home() {
             ))}
           </div>
         ) : (
-          // Blog List
-          // <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          //   {blogs.map((blog) => (
-          //     <BlogCard
-          //       key={blog._id}
-          //       title={blog.title}
-          //       description={blog.description}
-          //       slug={blog.slug}
-          //       imageUrl={blog.thumbnailUrl }
-          //     />
-          //   ))}
-          // </div>
-          <BlogCarousel blogs={blogs}/>
-          // <div className="relative overflow-hidden w-full h-full py-20">
-          //   <Carousel slides={slideData} />
-          // </div>
+          <BlogCarousel blogs={blogs} />
         )}
       </section>
 
@@ -189,36 +165,40 @@ export default function Home() {
           Meet Our Team
         </h2>
         <DraggableCardContainer className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-clip px-4 text-center">
-        <div>
-          <p className="text-base md:text-lg mb-6 max-w-2xl mx-auto">
-            We are a passionate group of students committed to making a positive impact in Tegalombo. 
-            Together through the Langkara Project, we aim to celebrate, preserve, and empower the local community.
-          </p>
-          <button 
-            onClick={() => router.push('/about')}
-            className="bg-secondary text-[#494633] px-8 py-3 rounded-full text-lg hover:bg-[#d4ad7f] transition-colors font-semibold"
-          >
-            Learn More About Us
-          </button>
-        </div>
+          <div>
+            <p className="text-base md:text-lg mb-6 max-w-2xl mx-auto">
+              We are a passionate group of students committed to making a
+              positive impact in Tegalombo. Together through the Langkara
+              Project, we aim to celebrate, preserve, and empower the local
+              community.
+            </p>
+            <button
+              onClick={() => router.push("/about")}
+              className="bg-secondary text-[#494633] px-8 py-3 rounded-full text-lg hover:bg-[#d4ad7f] transition-colors font-semibold"
+            >
+              Learn More About Us
+            </button>
+          </div>
 
-        <div className="flex flex-wrap justify-center gap-8">
-          {items.map((item, index) => (
-            <DraggableCardBody key={item.title || index} className={item.className}>
-              <img
-                src={item.image}
-                alt={item.title}
-                className="pointer-events-none relative z-10 h-80 w-80 object-cover"
-              />
-              <h3 className="mt-4 text-center text-2xl font-bold text-neutral-700 dark:text-neutral-300">
-                {item.title}
-              </h3>
-            </DraggableCardBody>
-          ))}
-        </div>
-      </DraggableCardContainer>
+          <div className="flex flex-wrap justify-center gap-8">
+            {items.map((item, index) => (
+              <DraggableCardBody
+                key={item.title || index}
+                className={item.className}
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="pointer-events-none relative z-10 h-80 w-80 object-cover"
+                />
+                <h3 className="mt-4 text-center text-2xl font-bold text-neutral-700 dark:text-neutral-300">
+                  {item.title}
+                </h3>
+              </DraggableCardBody>
+            ))}
+          </div>
+        </DraggableCardContainer>
       </section>
-
     </div>
-  )
+  );
 }

@@ -2,49 +2,47 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { Menu, X } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 export function Navbar() {
   const [showNavbar, setShowNavbar] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      if (typeof window !== 'undefined') {
-        const currentScrollY = window.scrollY
+      const currentScrollY = window.scrollY
 
-        if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          // Scrolling down and not at top
-          setShowNavbar(false)
-        } else {
-          // Scrolling up
-          setShowNavbar(true)
-        }
-
-        setLastScrollY(currentScrollY)
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setShowNavbar(false)
+        setIsMenuOpen(false)
+      } else {
+        setShowNavbar(true)
       }
+
+      setLastScrollY(currentScrollY)
     }
 
     window.addEventListener('scroll', handleScroll)
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [lastScrollY])
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   return (
     <nav
-      className={`fixed top-4 left-1/2 z-50 transform -translate-x-1/2 bg-primary rounded-2xl px-8 py-4 flex items-center justify-between w-[95%] max-w-8xl
+      className={`fixed top-4 left-1/2 z-50 transform -translate-x-1/2 bg-primary rounded-2xl px-6 py-4 flex items-center justify-between w-[95%] max-w-8xl
       transition-transform duration-500 ease-in-out
       ${showNavbar ? 'translate-y-0' : '-translate-y-20'}`}
     >
-      <div className="flex items-center space-x-2">
-        {/* Logo / Site Name */}
-        <Link href="/" className="text-lg font-semibold text-secondary">
-          Langkara Tegalombo
-        </Link>
-      </div>
-      <div className="flex items-center space-x-6">
-        {/* Navigation Links */}
+      {/* Logo */}
+      <Link href="/" className="text-lg font-semibold text-secondary">
+        Langkara Tegalombo
+      </Link>
+
+      {/* Desktop Menu */}
+      <div className="hidden md:flex items-center space-x-6">
         <Link href="/timeline" className="hover:underline text-secondary">
           Our Story
         </Link>
@@ -55,6 +53,49 @@ export function Navbar() {
           Our Team
         </Link>
       </div>
+
+      {/* Toggle Button for Mobile */}
+      <div className="md:hidden">
+        <button onClick={toggleMenu} className="text-secondary">
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu with Animation */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="absolute top-[75%] left-0 w-full bg-primary rounded-b-2xl px-6 py-4 flex flex-col space-y-4 md:hidden overflow-hidden"
+          >
+            <Link
+              href="/timeline"
+              className="text-secondary hover:underline"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Our Story
+            </Link>
+            <Link
+              href="/project"
+              className="text-secondary hover:underline"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Projects
+            </Link>
+            <Link
+              href="/about"
+              className="text-secondary hover:underline"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Our Team
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }
