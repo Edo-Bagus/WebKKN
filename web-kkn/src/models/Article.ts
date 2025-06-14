@@ -1,4 +1,5 @@
-import { Schema, Document, models, model, Types } from 'mongoose';
+import { Schema, Document, models, model } from 'mongoose';
+import { ITeamMember } from './TeamMember';
 
 export interface IRelatedArticle {
   title: string;
@@ -11,7 +12,7 @@ export interface IArticle extends Document {
   date: Date;
   category: string;
   readingTime: string;
-  author: Types.ObjectId; // refer to TeamMember
+  author: ITeamMember; // refer to TeamMember
   thumbnailUrl: string;
   description: string;
   content: string;

@@ -16,7 +16,7 @@ export default function MemberCard({ article }: any) {
         {/* Foto profil */}
         <div className="w-24 h-24 relative mb-4">
           <Image
-            src={author.photoUrl || '/images/person.jpg'}
+            src={author.pictureUrl || '/images/person.jpg'}
             alt={author.name}
             fill
             className="rounded-full object-cover"

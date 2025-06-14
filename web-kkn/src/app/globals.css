@@ -28,21 +28,8 @@
 /* src/app/globals.css */
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #E0C49A;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #494633; /* warna biru */
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #494633;
+  width: 0px;
+  height: 0px;
 }
 
 @layer base {

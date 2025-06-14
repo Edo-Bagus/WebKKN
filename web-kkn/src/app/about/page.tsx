@@ -4,9 +4,10 @@ import { Navbar } from '@/components/ui/navbar'
 import { AnimatedTestimonials } from '@/components/ui/animated-testimonials';
 import Link from 'next/link'
 import { useEffect, useState } from 'react';
+import { ITeamMember } from '@/models/TeamMember';
 
 export default function About() {
-const [teamTestimonials, setTeamTestimonials] = useState([])
+const [, setTeamTestimonials] = useState([])
 const [saintekCluster, setSaintekCluster] = useState([])
 const [soshumCluster, setSoshumCluster] = useState([])
 const [agroCluster, setAgroCluster] = useState([])
@@ -18,7 +19,7 @@ useEffect(() => {
       const res = await fetch('/api/team-members')
       const data = await res.json()
 
-      const mapped = data.members.map((member: any) => ({
+      const mapped = data.members.map((member: ITeamMember) => ({
         quote: `Proud to contribute to the development of Tegalombo through ${member.cluster}.`,
         name: member.name,
         designation: `${member.major} - ${member.faculty}`,
@@ -32,10 +33,10 @@ useEffect(() => {
       setTeamTestimonials(mapped)
 
       // Split into clusters
-      setSaintekCluster(mapped.filter((m: any) => m.cluster === 'Saintek'))
-      setSoshumCluster(mapped.filter((m: any) => m.cluster === 'Soshum'))
-      setAgroCluster(mapped.filter((m: any) => m.cluster === 'Agro'))
-      setMedikaCluster(mapped.filter((m: any) => m.cluster === 'Medika'))
+      setSaintekCluster(mapped.filter((m: ITeamMember) => m.cluster === 'Saintek'))
+      setSoshumCluster(mapped.filter((m: ITeamMember) => m.cluster === 'Soshum'))
+      setAgroCluster(mapped.filter((m: ITeamMember) => m.cluster === 'Agro'))
+      setMedikaCluster(mapped.filter((m: ITeamMember) => m.cluster === 'Medika'))
 
     } catch (error) {
       console.error('Error fetching team members:', error)
@@ -65,13 +66,13 @@ useEffect(() => {
         <section className="max-w-4xl mt-12 text-base md:text-lg leading-relaxed text-accent space-y-6">
           <p>
             We are a passionate team from Universitas Gadjah Mada participating in the KKN-PPM program,
-            dedicating our efforts to Tegalombo's local development. Our focus lies in promoting eco-tourism,
+            dedicating our efforts to Tegalombo`&apos;`s local development. Our focus lies in promoting eco-tourism,
             preserving cultural heritage, and empowering the community through sustainable initiatives.
           </p>
 
           <p>
             Together, we believe that by working hand-in-hand with the local community, we can build
-            a resilient future that honors the richness of Tegalombo's natural and cultural treasures.
+            a resilient future that honors the richness of Tegalombo`&apos;`s natural and cultural treasures.
           </p>
 
           <p>

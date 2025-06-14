@@ -4,6 +4,7 @@ import Article from '@/models/Article';
 import { IArticle } from '@/models/Article';
 import TeamMember from '@/models/TeamMember';
 import readingTime from 'reading-time';
+import { FilterQuery } from 'mongoose';
 
 
 export async function GET(request: Request) {
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
     const limit = parseInt(searchParams.get('limit') || '6', 10);
     const skip = (page - 1) * limit;
 
-    const query: any = {};
+    const query: FilterQuery<IArticle> = {};
 
     if (search) {
       query.title = { $regex: search, $options: 'i' };

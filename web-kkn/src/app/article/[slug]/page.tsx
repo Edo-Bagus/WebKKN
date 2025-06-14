@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { Navbar } from "@/components/ui/navbar";
 import { getArticleBySlug } from "@/lib/api";
-import { remark } from "remark";
-import remarkHtml from "remark-html";
 import Markdown from "react-markdown"
 import MemberCard from "@/components/ui/member-card";
 

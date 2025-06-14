@@ -5,6 +5,8 @@ import BlogCard from "@/components/ui/blog-card";
 import { Navbar } from "../../components/ui/navbar";
 import dynamic from "next/dynamic";
 import { MultiValue, SingleValue } from "react-select";
+import { ITeamMember } from "@/models/TeamMember";
+import { IArticle } from "@/models/Article";
 
 type OptionType = {
   label: string;
@@ -45,7 +47,7 @@ export default function ProjectPage() {
     const fetchTeamMembers = async () => {
       const res = await fetch("/api/team-members");
       const { members } = await res.json();
-      const team = members.map((member: any) => ({
+      const team = members.map((member: ITeamMember) => ({
         value: member._id,
         label: member.name,
       }));
@@ -85,113 +87,116 @@ export default function ProjectPage() {
   return (
     <main className="min-h-screen bg-accent px-6 py-10">
       <Navbar />
-      <h1 className="text-3xl font-bold text-primary mb-8 text-center">
-        Proyek KKN Kami
-      </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {/* Filter Sidebar */}
-        <aside className="bg-white p-4 rounded-xl shadow col-span-1 space-y-4 self-start">
-          <input
-            type="text"
-            placeholder="Cari proyek..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
-          />
+      <div className="flex items-start justify-center pt-20">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 w-[95%] justify-between">
+          {/* Filter Sidebar */}
+          <aside className="bg-white p-4 rounded-xl shadow col-span-1 space-y-4 self-start">
+            <input
+              type="text"
+              placeholder="Cari proyek..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
+            />
 
-          <div>
-            <h2 className="font-semibold mb-2">Filter Klaster</h2>
-            <Select
-              isMulti
-              options={klasterOptions}
-              value={klasterOptions.filter((option) =>
-                selectedClusters.includes(option.value)
-              )}
-              onChange={(selected) =>
-                setSelectedClusters(
-                  (selected as MultiValue<OptionType>).map(
-                    (option) => option.value
+            <div>
+              <h2 className="font-semibold mb-2">Filter Klaster</h2>
+              <Select
+                isMulti
+                options={klasterOptions}
+                value={klasterOptions.filter((option) =>
+                  selectedClusters.includes(option.value)
+                )}
+                onChange={(selected) =>
+                  setSelectedClusters(
+                    (selected as MultiValue<OptionType>).map(
+                      (option) => option.value
+                    )
                   )
-                )
-              }
-              placeholder="Pilih klaster..."
-              className="text-sm"
-              classNamePrefix="react-select"
-            />
-          </div>
+                }
+                placeholder="Pilih klaster..."
+                className="text-sm"
+                classNamePrefix="react-select"
+              />
+            </div>
 
-          <div>
-            <h2 className="font-semibold mb-2">Filter Orang</h2>
-            <Select
-              isMulti
-              options={teamMembers}
-              value={teamMembers.filter((option) =>
-                selectedPeople.includes(option.value)
-              )}
-              onChange={(selected) =>
-                setSelectedPeople(
-                  (selected as MultiValue<OptionType>).map(
-                    (option) => option.value
+            <div>
+              <h2 className="font-semibold mb-2">Filter Orang</h2>
+              <Select
+                isMulti
+                options={teamMembers}
+                value={teamMembers.filter((option) =>
+                  selectedPeople.includes(option.value)
+                )}
+                onChange={(selected) =>
+                  setSelectedPeople(
+                    (selected as MultiValue<OptionType>).map(
+                      (option) => option.value
+                    )
                   )
-                )
-              }
-              placeholder="Pilih penulis..."
-              className="text-sm"
-              classNamePrefix="react-select"
-            />
-          </div>
-
-          <div>
-            <h2 className="font-semibold mb-2">Urutkan</h2>
-            <Select
-              options={sortOptions}
-              value={sortOptions.find((opt) => opt.value === sortOrder)}
-              onChange={(selected) =>
-                setSortOrder(
-                  (selected as SingleValue<OptionType>)?.value as
-                    | "terbaru"
-                    | "terlama"
-                )
-              }
-              className="text-sm"
-              classNamePrefix="react-select"
-            />
-          </div>
-        </aside>
-
-        {/* Article Cards */}
-        <section className="col-span-1 md:col-span-3">
-          {projects.length === 0 ? (
-            <p className="text-center text-neutral-500">
-              Tidak ada proyek yang ditemukan.
-            </p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {projects.map((project: any) => (
-                <BlogCard key={project.slug} {...project} />
-              ))}
+                }
+                placeholder="Pilih penulis..."
+                className="text-sm"
+                classNamePrefix="react-select"
+              />
             </div>
-          )}
 
-          {totalPages > 1 && (
-            <div className="flex justify-center mt-8 space-x-2">
-              {Array.from({ length: totalPages }, (_, i) => (
-                <button
-                  key={i + 1}
-                  onClick={() => setCurrentPage(i + 1)}
-                  className={`px-4 py-2 rounded-lg border text-sm ${
-                    currentPage === i + 1
-                      ? "bg-primary text-white border-primary"
-                      : "bg-white text-primary border-neutral-300 hover:bg-neutral-100"
-                  }`}
-                >
-                  {i + 1}
-                </button>
-              ))}
+            <div>
+              <h2 className="font-semibold mb-2">Urutkan</h2>
+              <Select
+                options={sortOptions}
+                value={sortOptions.find((opt) => opt.value === sortOrder)}
+                onChange={(selected) =>
+                  setSortOrder(
+                    (selected as SingleValue<OptionType>)?.value as
+                      | "terbaru"
+                      | "terlama"
+                  )
+                }
+                className="text-sm"
+                classNamePrefix="react-select"
+              />
             </div>
-          )}
-          </section>
+          </aside>
+
+          {/* Article Cards */}
+          <section className="col-span-1 md:col-span-3">
+            {projects.length === 0 ? (
+              <p className="text-center text-neutral-500">
+                Tidak ada proyek yang ditemukan.
+              </p>
+            ) : (
+              <div className="w-full px-4">
+                <div className="flex flex-wrap justify-between">
+                  {projects.map((project: IArticle) => (
+                    <div key={project.slug} className="w-full sm:w-[48%] lg:w-[32%] mb-6">
+                      <BlogCard {...project} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {totalPages > 1 && (
+              <div className="flex justify-center mt-8 space-x-2">
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <button
+                    key={i + 1}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`px-4 py-2 rounded-lg border text-sm ${
+                      currentPage === i + 1
+                        ? "bg-primary text-white border-primary"
+                        : "bg-white text-primary border-neutral-300 hover:bg-neutral-100"
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+            )}
+            </section>
+        </div>
       </div>
     </main>
   );

@@ -2,14 +2,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import readingTime from "reading-time";
+import { ITeamMember } from "@/models/TeamMember";
 
 interface BlogCardProps {
   title: string;
   description: string;
   slug: string;
   thumbnailUrl: string;
-  author: any;
+  author: ITeamMember;
   readingTime: string;
 }
 

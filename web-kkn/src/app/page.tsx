@@ -7,10 +7,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { fetchArticles } from "@/lib/api";
 import { BlogCarousel } from "@/components/ui/blog-carousel";
-import {
-  DraggableCardBody,
-  DraggableCardContainer,
-} from "@/components/ui/draggable-card";
+import { InfiniteMovingImages } from "@/components/ui/moving-card";
+import { IArticle } from "@/models/Article";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,55 +25,18 @@ export default function Home() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const items = [
-    {
-      title: "Tyler Durden",
-      image:
-        "https://images.unsplash.com/photo-1732310216648-603c0255c000?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      className: "absolute top-10 left-[20%] rotate-[-5deg]",
-    },
-    {
-      title: "The Narrator",
-      image:
-        "https://images.unsplash.com/photo-1697909623564-3dae17f6c20b?q=80&w=2667&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      className: "absolute top-40 left-[25%] rotate-[-7deg]",
-    },
-    {
-      title: "Iceland",
-      image:
-        "https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=2600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      className: "absolute top-5 left-[40%] rotate-[8deg]",
-    },
-    {
-      title: "Japan",
-      image:
-        "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=3648&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      className: "absolute top-32 left-[55%] rotate-[10deg]",
-    },
-    {
-      title: "Norway",
-      image:
-        "https://images.unsplash.com/photo-1421789665209-c9b2a435e3dc?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      className: "absolute top-20 right-[35%] rotate-[2deg]",
-    },
-    {
-      title: "New Zealand",
-      image:
-        "https://images.unsplash.com/photo-1505142468610-359e7d316be0?q=80&w=3070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      className: "absolute top-24 left-[45%] rotate-[-7deg]",
-    },
-    {
-      title: "Canada",
-      image:
-        "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      className: "absolute top-8 left-[30%] rotate-[4deg]",
-    },
+  const images = [
+    "/images/dummy.jpg",
+    "/images/dummy2.jpg",
+    "/images/dummy3.jpg",
+    "/images/dummy4.jpg",
+    "/images/dummy5.jpg",
   ];
 
   useEffect(() => {
     async function loadArticles() {
       const data = await fetchArticles("desc", 5); // misalnya ambil 5 terbaru
-      const mapped = data.articles.map((article: any) => ({
+      const mapped = data.articles.map((article: IArticle) => ({
         _id: article._id,
         title: article.title,
         description: article.description,
@@ -160,44 +121,85 @@ export default function Home() {
       </section>
 
       {/* ---- About Us Section ---- */}
-      <section className="px-8 md:px-24 py-16 text-center">
+      <section className="min-h-screen flex flex-col justify-center items-center px-8 md:px-24 py-16 text-center">
         <h2 className="text-3xl md:text-5xl font-semibold mb-4">
           Meet Our Team
         </h2>
-        <DraggableCardContainer className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-clip px-4 text-center">
-          <div>
-            <p className="text-base md:text-lg mb-6 max-w-2xl mx-auto">
-              We are a passionate group of students committed to making a
-              positive impact in Tegalombo. Together through the Langkara
-              Project, we aim to celebrate, preserve, and empower the local
-              community.
-            </p>
-            <button
-              onClick={() => router.push("/about")}
-              className="bg-secondary text-[#494633] px-8 py-3 rounded-full text-lg hover:bg-[#d4ad7f] transition-colors font-semibold"
-            >
-              Learn More About Us
-            </button>
-          </div>
 
-          <div className="flex flex-wrap justify-center gap-8">
-            {items.map((item, index) => (
-              <DraggableCardBody
-                key={item.title || index}
-                className={item.className}
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="pointer-events-none relative z-10 h-80 w-80 object-cover"
-                />
-                <h3 className="mt-4 text-center text-2xl font-bold text-neutral-700 dark:text-neutral-300">
-                  {item.title}
-                </h3>
-              </DraggableCardBody>
-            ))}
-          </div>
-        </DraggableCardContainer>
+        <div className="h-[20rem] w-full flex items-center justify-center bg-accent dark:bg-black relative overflow-hidden mb-8">
+          <InfiniteMovingImages
+            images={images}
+            direction="right"
+            speed="normal"
+          />
+        </div>
+
+        <div className="max-w-2xl mx-auto mb-4">
+          <p className="text-base md:text-lg mb-6">
+            We are a passionate group of students committed to making a positive
+            impact in Tegalombo. Together through the Langkara Project, we aim
+            to celebrate, preserve, and empower the local community.
+          </p>
+          <button
+            onClick={() => router.push("/about")}
+            className="bg-secondary text-[#494633] px-6 py-2 rounded-full text-base hover:bg-[#d4ad7f] transition-colors font-semibold"
+          >
+            Learn More About Us
+          </button>
+        </div>
+      </section>
+
+      {/* ---- Sponsors Section ---- */}
+      {/* ---- Sponsor Section ---- */}
+      <section className="px-8 md:px-24 py-16 bg-accent text-primary">
+        <h2 className="text-3xl md:text-5xl font-semibold text-center mb-12">
+          Our <span className="italic">Supporters</span>
+        </h2>
+        <div className="relative flex flex-wrap justify-center items-start gap-4 md:gap-8 max-w-6xl mx-auto">
+          {/* Medium Sponsors */}
+          <img
+            src="/sponsors/medium1.png"
+            alt="Sponsor Medium 1"
+            className="h-24 object-contain"
+          />
+          <img
+            src="/sponsors/medium2.png"
+            alt="Sponsor Medium 2"
+            className="h-24 object-contain"
+          />
+
+          {/* Small Sponsors */}
+          <img
+            src="/sponsors/small1.png"
+            alt="Sponsor Small 1"
+            className="h-16 object-contain"
+          />
+          <img
+            src="/sponsors/small2.png"
+            alt="Sponsor Small 2"
+            className="h-16 object-contain"
+          />
+          <img
+            src="/sponsors/small3.png"
+            alt="Sponsor Small 3"
+            className="h-16 object-contain"
+          />
+          <img
+            src="/sponsors/small4.png"
+            alt="Sponsor Small 4"
+            className="h-16 object-contain"
+          />
+          <img
+            src="/sponsors/small5.png"
+            alt="Sponsor Small 5"
+            className="h-16 object-contain"
+          />
+          <img
+            src="/sponsors/small6.png"
+            alt="Sponsor Small 6"
+            className="h-16 object-contain"
+          />
+        </div>
       </section>
     </div>
   );
