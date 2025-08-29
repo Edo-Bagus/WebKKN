@@ -182,7 +182,7 @@ export default function Home() {
           {/* Baris 2: Small Sponsors 1-4 */}
           <div className="flex justify-center gap-4 flex-wrap">
             <img
-              src="/sponsors/small1.png"
+              src="/sponsors/small1_fix.png"
               alt="Sponsor Small 1"
               className="h-32 object-contain"
             />
@@ -197,7 +197,7 @@ export default function Home() {
               className="h-32 object-contain"
             />
             <img
-              src="/sponsors/small4.png"
+              src="/sponsors/small4_fix.png"
               alt="Sponsor Small 4"
               className="h-32 object-contain"
             />
@@ -206,7 +206,7 @@ export default function Home() {
           {/* Baris 3: Small Sponsors 5-7 */}
           <div className="flex justify-center gap-4 flex-wrap">
             <img
-              src="/sponsors/small5.png"
+              src="/sponsors/small5_fix.png"
               alt="Sponsor Small 5"
               className="h-32 object-contain"
             />

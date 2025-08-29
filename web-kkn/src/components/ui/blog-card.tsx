@@ -3,7 +3,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ITeamMember } from "@/models/TeamMember";
 
-interface BlogCardProps {
+export interface BlogCardProps {
   title: string;
   description: string;
   slug: string;
