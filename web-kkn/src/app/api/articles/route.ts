@@ -39,7 +39,7 @@ export async function GET(request: Request) {
     const total = await Article.countDocuments(query); // Hitung total artikel sesuai filter
 
     const articles = await Article.find(query)
-      .sort({ date: sortOrder })
+      .sort({ date: sortOrder, _id: sortOrder })
       .skip(skip)
       .limit(limit)
       .populate('author')

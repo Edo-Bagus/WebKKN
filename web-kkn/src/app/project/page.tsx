@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { MultiValue, SingleValue } from "react-select";
 import { ITeamMember } from "@/models/TeamMember";
 import { IArticle } from "@/models/Article";
+import { Footer } from "@/components/ui/footer";
 
 type OptionType = {
   label: string;
@@ -85,9 +86,9 @@ export default function ProjectPage() {
 
 
   return (
-    <main className="min-h-screen bg-accent px-6 py-10">
+    <div className="flex flex-col min-h-screen bg-accent">
       <Navbar />
-
+      <main className="flex-1 px-6 pt-10">
       <div className="flex items-start justify-center pt-20">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 w-[95%] justify-between">
           {/* Filter Sidebar */}
@@ -198,6 +199,8 @@ export default function ProjectPage() {
             </section>
         </div>
       </div>
-    </main>
+      </main>
+      <Footer />
+    </div>
   );
 }

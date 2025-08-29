@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { Navbar } from "@/components/ui/navbar";
 import { getArticleBySlug } from "@/lib/api";
-import Markdown from "react-markdown"
+import Markdown from "react-markdown";
 import MemberCard from "@/components/ui/member-card";
+import { Footer } from "@/components/ui/footer";
 
 interface Params {
   params: { slug: string };
@@ -12,7 +13,6 @@ export default async function ArtikelPage({ params }: Params) {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
 
-
   return (
     <div className="bg-accent min-h-screen text-primary">
       <Navbar />
@@ -20,7 +20,9 @@ export default async function ArtikelPage({ params }: Params) {
         {/* Section 1 - Header Artikel */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="space-y-4">
-            <p className="text-s">{new Date(article.date).toLocaleDateString("id-ID")}</p>
+            <p className="text-s">
+              {new Date(article.date).toLocaleDateString("id-ID")}
+            </p>
             <h1 className="text-4xl font-bold">{article.title}</h1>
             <p className="text-lg">{article.description}</p>
             <div className="flex flex-wrap gap-2 mt-4">
@@ -46,22 +48,29 @@ export default async function ArtikelPage({ params }: Params) {
           </div>
         </section>
 
-        {/* Section 2 - Isi Artikel */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          {/* Article Content */}
           <div className="col-span-2 space-y-6">
             <div className="prose text-primary">
               <Markdown>{article.content}</Markdown>
             </div>
           </div>
-          
+
+          {/* Member Card */}
           {!article ? (
             <p>Loading team members...</p>
           ) : (
-            <MemberCard article={article} />
+            <div className="md:col-span-1">
+              <div className="sticky top-32">
+                {" "}
+                {/* Adjust top to match navbar height */}
+                <MemberCard article={article} />
+              </div>
+            </div>
           )}
-
         </section>
       </main>
+      <Footer />
     </div>
   );
 }

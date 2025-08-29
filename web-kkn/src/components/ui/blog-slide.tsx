@@ -81,7 +81,7 @@ export function BlogCardSlide({
             className="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-500"
           />
           {current === index && (
-            <div className="absolute inset-0 bg-black/40 transition-all duration-1000" />
+            <div className="absolute inset-0 bg-black/75 transition-all duration-1000" />
           )}
         </div>
 

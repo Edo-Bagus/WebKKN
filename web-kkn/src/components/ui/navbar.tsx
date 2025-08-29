@@ -38,19 +38,19 @@ export function Navbar() {
     >
       {/* Logo */}
       <Link href="/" className="text-lg font-semibold text-secondary">
-        Langkara Tegalombo
+        Langkara Talambo
       </Link>
 
       {/* Desktop Menu */}
       <div className="hidden md:flex items-center space-x-6">
-        <Link href="/timeline" className="hover:underline text-secondary">
-          Our Story
+        <Link href="/story" className="hover:underline text-secondary">
+          Cerita Kami
         </Link>
         <Link href="/project" className="hover:underline text-secondary">
-          Projects
+          Program
         </Link>
         <Link href="/about" className="hover:underline text-secondary">
-          Our Team
+          Tim Kami
         </Link>
       </div>
 
@@ -73,7 +73,7 @@ export function Navbar() {
             className="absolute top-[75%] left-0 w-full bg-primary rounded-b-2xl px-6 py-4 flex flex-col space-y-4 md:hidden overflow-hidden"
           >
             <Link
-              href="/timeline"
+              href="/story"
               className="text-secondary hover:underline"
               onClick={() => setIsMenuOpen(false)}
             >
