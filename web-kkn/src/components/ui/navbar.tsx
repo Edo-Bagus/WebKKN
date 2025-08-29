@@ -77,21 +77,21 @@ export function Navbar() {
               className="text-secondary hover:underline"
               onClick={() => setIsMenuOpen(false)}
             >
-              Our Story
+              Cerita Kami
             </Link>
             <Link
               href="/project"
               className="text-secondary hover:underline"
               onClick={() => setIsMenuOpen(false)}
             >
-              Projects
+              Program
             </Link>
             <Link
               href="/about"
               className="text-secondary hover:underline"
               onClick={() => setIsMenuOpen(false)}
             >
-              Our Team
+              Tim Kami
             </Link>
           </motion.div>
         )}
