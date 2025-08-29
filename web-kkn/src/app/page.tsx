@@ -196,15 +196,15 @@ export default function Home() {
               alt="Sponsor Small 3"
               className="h-32 object-contain"
             />
+          </div>
+
+          {/* Baris 3: Small Sponsors 5-7 */}
+          <div className="flex justify-center gap-4 flex-wrap">
             <img
               src="/sponsors/small4_fix.png"
               alt="Sponsor Small 4"
               className="h-32 object-contain"
             />
-          </div>
-
-          {/* Baris 3: Small Sponsors 5-7 */}
-          <div className="flex justify-center gap-4 flex-wrap">
             <img
               src="/sponsors/small5_fix.png"
               alt="Sponsor Small 5"
