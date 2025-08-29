@@ -1,25 +1,48 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { Timeline } from "@/components/ui/timeline";
-import { Navbar } from "@/components/ui/navbar";
+import { Navbar } from "../../components/ui/navbar";
+import BlogCard from "@/components/ui/blog-card";
 import { Footer } from "@/components/ui/footer";
-import BlogCard, { BlogCardProps } from "@/components/ui/blog-card";
 
-export default async function TimelinePage() {
-  const slugs = [
-    "peta-kerentanan-tanah-longsor-tahunan-baru",
-    "digitalisasi-teknologi-pertanian-tahunan",
-    "sosialisasi-edukasi-keuangan-ojk-kediri",
-    "koperasi-desa-merah-putih-tahunan",
-    "simbok-mineral-blok-tahunan-baru",
-    "penanaman-gama-umami-pakan-hijauan",
-    "cek-sehat-bersama-ptm",
-    "serumah-sehat-dari-rumah-toga",
-  ];
+export default function TimelineDemoClient() {
+  const [articles, setArticles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const articles: BlogCardProps[] = await Promise.all(
-    slugs.map((slug) =>
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/articles/${slug}`).then((res) => res.json())
-    )
-  );
+  useEffect(() => {
+    async function fetchArticles() {
+      const slugs = [
+        "peta-kerentanan-tanah-longsor-tahunan-baru",
+        "digitalisasi-teknologi-pertanian-tahunan",
+        "sosialisasi-edukasi-keuangan-ojk-kediri",
+        "koperasi-desa-merah-putih-tahunan",
+        "simbok-mineral-blok-tahunan-baru",
+        "penanaman-gama-umami-pakan-hijauan",
+        "cek-sehat-bersama-ptm",
+        "serumah-sehat-dari-rumah-toga",
+      ];
+
+      try {
+        const promises = slugs.map(async (slug) => {
+          const res = await fetch(
+            `/api/articles/${slug}`
+          );
+          if (!res.ok) throw new Error(`Gagal fetch artikel: ${slug}`);
+          return res.json();
+        });
+
+        const articlesData = await Promise.all(promises);
+        setArticles(articlesData);
+      } catch (err) {
+        console.error("Gagal memuat artikel", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchArticles();
+  }, []);
 
   const data = [
     {
@@ -27,10 +50,11 @@ export default async function TimelinePage() {
       content: (
         <div className="flex flex-col gap-6">
           <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-300">
-            Pengabdian dalam bidang sains dan teknologi difokuskan untuk mengembangkan inovasi yang
-            bermanfaat bagi masyarakat di Desa Tahunan dan Tahunan Baru. Program ini mencakup penerapan
-            teknologi tepat guna serta edukasi digital yang mendukung kemandirian desa dengan berbasis
-            mitigasi bencana.
+            Pengabdian dalam bidang sains dan teknologi difokuskan untuk
+            mengembangkan inovasi yang bermanfaat bagi masyarakat di Desa
+            Tahunan dan Tahunan Baru. Program ini mencakup penerapan teknologi
+            tepat guna serta edukasi digital yang mendukung kemandirian desa
+            dengan berbasis mitigasi bencana.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {articles[0] && <BlogCard {...articles[0]} />}
@@ -44,9 +68,11 @@ export default async function TimelinePage() {
       content: (
         <div className="flex flex-col gap-6">
           <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-300">
-            Program pengabdian dalam bidang sosial dan humaniora berfokus pada penguatan modal sosial,
-            pemberdayaan masyarakat, serta peningkatan kualitas hidup warga melalui pengembanan ekonomi
-            dan pendidikan. Pendekatan ini menekankan kolaborasi dan keberlanjutan dalam membangun desa.
+            Program pengabdian dalam bidang sosial dan humaniora berfokus pada
+            penguatan modal sosial, pemberdayaan masyarakat, serta peningkatan
+            kualitas hidup warga melalui pengembanan ekonomi dan pendidikan.
+            Pendekatan ini menekankan kolaborasi dan keberlanjutan dalam
+            membangun desa.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {articles[2] && <BlogCard {...articles[2]} />}
@@ -60,10 +86,11 @@ export default async function TimelinePage() {
       content: (
         <div className="flex flex-col gap-6">
           <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-300">
-            Klaster agrokompleks berfokus pada sektor pertanian, peternakan, dan perikanan sebagai penopang
-            utama perekonomian masyarakat. Program pengabdian meliputi peningkatan produktivitas, penerapan
-            teknologi tepat guna, serta pengelolaan sumber daya alam yang berkelanjutan untuk mendukung
-            ketahanan pangan desa.
+            Klaster agrokompleks berfokus pada sektor pertanian, peternakan, dan
+            perikanan sebagai penopang utama perekonomian masyarakat. Program
+            pengabdian meliputi peningkatan produktivitas, penerapan teknologi
+            tepat guna, serta pengelolaan sumber daya alam yang berkelanjutan
+            untuk mendukung ketahanan pangan desa.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {articles[4] && <BlogCard {...articles[4]} />}
@@ -77,10 +104,11 @@ export default async function TimelinePage() {
       content: (
         <div className="flex flex-col gap-6">
           <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-300">
-            Klaster medika berfokus pada kesehatan masyarakat melalui program preventif, promotif, kuratif,
-            dan rehabilitatif. Kegiatan yang dilaksanakan meliputi edukasi kesehatan, peningkatan akses
-            layanan, serta penerapan perilaku hidup bersih dan sehat untuk meningkatkan kualitas hidup
-            masyarakat.
+            Klaster medika berfokus pada kesehatan masyarakat melalui program
+            preventif, promotif, kuratif, dan rehabilitatif. Kegiatan yang
+            dilaksanakan meliputi edukasi kesehatan, peningkatan akses layanan,
+            serta penerapan perilaku hidup bersih dan sehat untuk meningkatkan
+            kualitas hidup masyarakat.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {articles[6] && <BlogCard {...articles[6]} />}
@@ -90,6 +118,14 @@ export default async function TimelinePage() {
       ),
     },
   ];
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full overflow-clip">

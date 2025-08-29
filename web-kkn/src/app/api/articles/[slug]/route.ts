@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Article from '@/models/Article';
+import TeamMember  from "@/models/TeamMember";
 
 export async function GET(req: NextRequest, context: { params: { slug: string } }) {
   try {
@@ -8,6 +9,8 @@ export async function GET(req: NextRequest, context: { params: { slug: string } 
 
     const { slug } = await context.params;
     const article = await Article.findOne({ slug }).populate("author").lean();
+
+    if(TeamMember)
 
     if (!article) {
       return NextResponse.json({ error: 'Artikel tidak ditemukan' }, { status: 404 });
