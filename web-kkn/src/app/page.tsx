@@ -37,16 +37,25 @@ export default function Home() {
 
   useEffect(() => {
     async function loadArticles() {
-      const data = await fetchArticles("desc", 5); // ambil 5 artikel terbaru
-      const mapped = data.articles.map((article: IArticle) => ({
-        _id: article._id,
-        title: article.title,
-        description: article.description,
-        thumbnailUrl: article.thumbnailUrl,
-        slug: article.slug,
-      }));
-      setBlogs(mapped);
-      setLoading(false);
+      try {
+        const res = await fetch("/api/articles?sort=desc&limit=5");
+        if (!res.ok) throw new Error("Failed to fetch articles");
+        const data = await res.json();
+
+        const mapped = data.articles.map((article: IArticle) => ({
+          _id: article._id,
+          title: article.title,
+          description: article.description,
+          thumbnailUrl: article.thumbnailUrl,
+          slug: article.slug,
+        }));
+
+        setBlogs(mapped);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadArticles();
@@ -136,7 +145,7 @@ export default function Home() {
         <div className="max-w-2xl mx-auto mb-4">
           <p className="text-base md:text-lg mb-6">
             Langkara Talambo hadir di Tegalombo dengan semangat untuk memberikan
-            dampak nyata bagi masyarakat. 
+            dampak nyata bagi masyarakat.
             <span className="font-semibold"> Langkara Talambo</span> terbentuk
             dari kolaborasi empat klaster KKN yang bersatu untuk satu tujuan:
             merayakan budaya, melestarikan alam, serta memberdayakan masyarakat
@@ -156,50 +165,63 @@ export default function Home() {
         <h2 className="text-3xl md:text-5xl font-semibold text-center mb-12">
           Dukungan dari <span className="italic">Sponsor</span>
         </h2>
-        <div className="relative flex flex-wrap justify-center items-start gap-4 md:gap-8 max-w-6xl mx-auto">
-          {/* Medium Sponsors */}
-          <img
-            src="/sponsors/medium1.png"
-            alt="Sponsor Medium 1"
-            className="h-24 object-contain"
-          />
-          <img
-            src="/sponsors/medium2.png"
-            alt="Sponsor Medium 2"
-            className="h-24 object-contain"
-          />
+        <div className="max-w-6xl mx-auto flex flex-col gap-8">
+          {/* Baris 1: Medium Sponsors */}
+          <div className="flex justify-center gap-8 flex-wrap">
+            <img
+              src="/sponsors/medium1.png"
+              alt="Sponsor Medium 1"
+              className="h-52 object-contain"
+            />
+            <img
+              src="/sponsors/medium2.png"
+              alt="Sponsor Medium 2"
+              className="h-52 object-contain"
+            />
+          </div>
 
-          {/* Small Sponsors */}
-          <img
-            src="/sponsors/small1.png"
-            alt="Sponsor Small 1"
-            className="h-16 object-contain"
-          />
-          <img
-            src="/sponsors/small2.png"
-            alt="Sponsor Small 2"
-            className="h-16 object-contain"
-          />
-          <img
-            src="/sponsors/small3.png"
-            alt="Sponsor Small 3"
-            className="h-16 object-contain"
-          />
-          <img
-            src="/sponsors/small4.png"
-            alt="Sponsor Small 4"
-            className="h-16 object-contain"
-          />
-          <img
-            src="/sponsors/small5.png"
-            alt="Sponsor Small 5"
-            className="h-16 object-contain"
-          />
-          <img
-            src="/sponsors/small6.png"
-            alt="Sponsor Small 6"
-            className="h-16 object-contain"
-          />
+          {/* Baris 2: Small Sponsors 1-4 */}
+          <div className="flex justify-center gap-4 flex-wrap">
+            <img
+              src="/sponsors/small1.png"
+              alt="Sponsor Small 1"
+              className="h-32 object-contain"
+            />
+            <img
+              src="/sponsors/small2.png"
+              alt="Sponsor Small 2"
+              className="h-32 object-contain"
+            />
+            <img
+              src="/sponsors/small3.png"
+              alt="Sponsor Small 3"
+              className="h-32 object-contain"
+            />
+            <img
+              src="/sponsors/small4.png"
+              alt="Sponsor Small 4"
+              className="h-32 object-contain"
+            />
+          </div>
+
+          {/* Baris 3: Small Sponsors 5-7 */}
+          <div className="flex justify-center gap-4 flex-wrap">
+            <img
+              src="/sponsors/small5.png"
+              alt="Sponsor Small 5"
+              className="h-32 object-contain"
+            />
+            <img
+              src="/sponsors/small6.png"
+              alt="Sponsor Small 6"
+              className="h-32 object-contain"
+            />
+            <img
+              src="/sponsors/small7.png"
+              alt="Sponsor Small 7"
+              className="h-32 object-contain"
+            />
+          </div>
         </div>
       </section>
       <Footer />

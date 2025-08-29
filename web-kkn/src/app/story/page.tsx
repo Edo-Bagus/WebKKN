@@ -13,40 +13,28 @@ export default function TimelineDemoClient() {
 
   useEffect(() => {
     async function fetchArticles() {
-      try {
-        const article1 = await getArticleBySlug(
-          "peta-kerentanan-tanah-longsor-tahunan-baru"
-        );
-        const article2 = await getArticleBySlug(
-          "digitalisasi-teknologi-pertanian-tahunan"
-        );
-        const article3 = await getArticleBySlug(
-          "sosialisasi-edukasi-keuangan-ojk-kediri"
-        );
-        const article4 = await getArticleBySlug(
-          "koperasi-desa-merah-putih-tahunan"
-        );
-        const article5 = await getArticleBySlug(
-          "simbok-mineral-blok-tahunan-baru"
-        );
-        const article6 = await getArticleBySlug(
-          "penanaman-gama-umami-pakan-hijauan"
-        );
-        const article7 = await getArticleBySlug("cek-sehat-bersama-ptm");
-        const article8 = await getArticleBySlug(
-          "serumah-sehat-dari-rumah-toga"
-        );
+      const slugs = [
+        "peta-kerentanan-tanah-longsor-tahunan-baru",
+        "digitalisasi-teknologi-pertanian-tahunan",
+        "sosialisasi-edukasi-keuangan-ojk-kediri",
+        "koperasi-desa-merah-putih-tahunan",
+        "simbok-mineral-blok-tahunan-baru",
+        "penanaman-gama-umami-pakan-hijauan",
+        "cek-sehat-bersama-ptm",
+        "serumah-sehat-dari-rumah-toga",
+      ];
 
-        setArticles([
-          article1,
-          article2,
-          article3,
-          article4,
-          article5,
-          article6,
-          article7,
-          article8,
-        ]);
+      try {
+        const promises = slugs.map(async (slug) => {
+          const res = await fetch(
+            `/api/articles/${slug}`
+          );
+          if (!res.ok) throw new Error(`Gagal fetch artikel: ${slug}`);
+          return res.json();
+        });
+
+        const articlesData = await Promise.all(promises);
+        setArticles(articlesData);
       } catch (err) {
         console.error("Gagal memuat artikel", err);
       } finally {
