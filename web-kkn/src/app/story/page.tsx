@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { Timeline } from "@/components/ui/timeline";
 import { Navbar } from "../../components/ui/navbar";
 import BlogCard from "@/components/ui/blog-card";
-import { getArticleBySlug } from "@/lib/api";
 import { Footer } from "@/components/ui/footer";
 
 export default function TimelineDemoClient() {

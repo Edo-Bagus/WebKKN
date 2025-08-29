@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { fetchArticles } from "@/lib/api";
 import { BlogCarousel } from "@/components/ui/blog-carousel";
 import { InfiniteMovingImages } from "@/components/ui/moving-card";
 import { IArticle } from "@/models/Article";
