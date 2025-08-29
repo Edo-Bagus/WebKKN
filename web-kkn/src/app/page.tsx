@@ -65,36 +65,53 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <main className="flex flex-col items-center justify-center text-center h-screen">
-        <div className="flex flex-col items-center justify-center text-center bg-primary text-secondary rounded-2xl p-6 m-4 h-[90%] w-[95%] max-w-8xl">
-          <p className="text-sm mb-2">KKN PPM UGM 2025</p>
+      {/* Hero Section */}
+<main className="flex flex-col items-center justify-center text-center h-screen">
+  <div className="flex flex-col items-center justify-center text-center bg-primary text-secondary rounded-2xl p-6 m-4 h-[90%] w-[95%] max-w-8xl">
+    <p className="text-sm mb-2">KKN PPM UGM 2025</p>
 
-          <h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-2">
-            Merangkai Cerita
-          </h1>
-          <h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-6">
-            Bersama Langkara Talambo
-          </h1>
+    <h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-6">
+      Merangkai Cerita <br />
+      Bersama Langkara Talambo
+    </h1>
 
-          <div className="w-16 h-1 bg-gradient-to-r from-accent to-secondary my-4"></div>
-        </div>
-      </main>
+    <p className="max-w-2xl text-base md:text-lg leading-relaxed">
+      <span className="font-semibold">Langkara Talambo</span> adalah inisiatif
+      mahasiswa Universitas Gadjah Mada yang hadir di Kecamatan Tegalombo,
+      Pacitan. Melalui program <span className="italic">KKN PPM UGM 2025</span>,
+      kami berkomitmen untuk mengangkat potensi budaya, memperkuat kolaborasi
+      dengan masyarakat, dan merawat keindahan alam. Halaman ini menjadi ruang
+      berbagi cerita, dokumentasi kegiatan, serta gagasan keberlanjutan dari
+      desa <span className="font-semibold">Tahunan dan Tahunan Baru</span>.
+    </p>
+
+    <div className="w-16 h-1 bg-gradient-to-r from-accent to-secondary my-4"></div>
+  </div>
+</main>
 
       {/* Tentang Langkara */}
       <section className="relative flex flex-col md:flex-row items-center justify-between gap-12 px-4 md:px-16 lg:px-32 py-16 min-h-[80vh] overflow-hidden">
-        <div className="flex-1 text-center md:text-left relative z-30">
-          <h2 className="text-3xl md:text-5xl font-semibold mb-6">
-            Siapa Kami, <span className="italic">Langkara Talambo?</span>
-          </h2>
-          <p className="text-base md:text-lg leading-relaxed">
-            Kami adalah tim mahasiswa yang hadir di Tegalombo dengan semangat
-            kolaborasi dan pemberdayaan.{" "}
-            <span className="font-semibold">Langkara Talambo</span> lahir dari
-            keinginan untuk menjaga budaya, merawat alam, dan menggali potensi
-            desa agar bisa tumbuh berkelanjutan. Bersama masyarakat, kami
-            percaya setiap langkah kecil dapat membawa perubahan besar.
-          </p>
-        </div>
+  <div className="flex-1 text-center md:text-left relative z-30">
+    <h2 className="text-3xl md:text-5xl font-semibold mb-6">
+      Siapa Kami, <span className="italic">Langkara Talambo?</span>
+    </h2>
+    <p className="text-base md:text-lg leading-relaxed mb-4">
+      Kami adalah tim mahasiswa yang hadir di Tegalombo dengan semangat
+      kolaborasi dan pemberdayaan. <span className="font-semibold">Langkara
+      Talambo</span> lahir dari keinginan untuk menjaga budaya, merawat alam,
+      dan menggali potensi desa agar bisa tumbuh berkelanjutan. Bersama
+      masyarakat, kami percaya setiap langkah kecil dapat membawa perubahan
+      besar.
+    </p>
+    <p className="text-base md:text-lg leading-relaxed">
+      Fokus utama kami mencakup dokumentasi budaya, pengembangan ekonomi lokal,
+      hingga penguatan kapasitas masyarakat desa. Dengan pendekatan partisipatif,
+      setiap program dirancang tidak hanya untuk memberikan solusi jangka pendek,
+      tetapi juga mendorong keberlanjutan jangka panjang. Kami ingin Tegalombo
+      dikenal tidak hanya karena keindahan alamnya, tetapi juga karena kekuatan
+      masyarakatnya.
+    </p>
+  </div>
 
         <div className="flex-1 relative z-30">
           <div className="w-full h-64 md:h-96 rounded-lg shadow-lg overflow-hidden">
@@ -110,8 +127,15 @@ export default function Home() {
       {/* Blog Section */}
       <section className="px-8 md:px-24 py-16 overflow-hidden">
         <h2 className="text-3xl md:text-5xl font-semibold text-center mb-12">
-          Artikel Terbaru dari <span className="italic">Blog Kami</span>
-        </h2>
+    Artikel Terbaru dari <span className="italic">Blog Kami</span>
+  </h2>
+  <p className="max-w-3xl mx-auto text-center text-base md:text-lg mb-12">
+    Di blog ini, tercatat kisah perjalanan tim, cerita inspiratif
+    dari warga, serta dokumentasi kegiatan selama <span className="font-semibold">
+    KKN PPM UGM 2025</span> di Tegalombo. Artikel-artikel ini ditulis untuk
+    memberi wawasan lebih dalam mengenai budaya, sejarah, dan potensi alam
+    yang kami eksplorasi bersama masyarakat.
+  </p>
 
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -43,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="id" className="scroll-smooth">
       <ReactLenis root>
         <body className={`${playfair.className} antialiased`}>{children}</body>
       </ReactLenis>
