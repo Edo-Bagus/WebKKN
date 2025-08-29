@@ -1,25 +1,61 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { Timeline } from "@/components/ui/timeline";
 import { Navbar } from "../../components/ui/navbar";
 import BlogCard from "@/components/ui/blog-card";
 import { getArticleBySlug } from "@/lib/api";
 import { Footer } from "@/components/ui/footer";
 
-export default async function TimelineDemo() {
-  const article1 = await getArticleBySlug(
-    "peta-kerentanan-tanah-longsor-tahunan-baru"
-  );
-  const article2 = await getArticleBySlug(
-    "digitalisasi-teknologi-pertanian-tahunan"
-  );
-  const article3 = await getArticleBySlug(
-    "sosialisasi-edukasi-keuangan-ojk-kediri"
-  );
-  const article4 = await getArticleBySlug("koperasi-desa-merah-putih-tahunan");
-  const article5 = await getArticleBySlug("simbok-mineral-blok-tahunan-baru");
-  const article6 = await getArticleBySlug("penanaman-gama-umami-pakan-hijauan");
-  const article7 = await getArticleBySlug("cek-sehat-bersama-ptm");
-  const article8 = await getArticleBySlug("serumah-sehat-dari-rumah-toga");
+export default function TimelineDemoClient() {
+  const [articles, setArticles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchArticles() {
+      try {
+        const article1 = await getArticleBySlug(
+          "peta-kerentanan-tanah-longsor-tahunan-baru"
+        );
+        const article2 = await getArticleBySlug(
+          "digitalisasi-teknologi-pertanian-tahunan"
+        );
+        const article3 = await getArticleBySlug(
+          "sosialisasi-edukasi-keuangan-ojk-kediri"
+        );
+        const article4 = await getArticleBySlug(
+          "koperasi-desa-merah-putih-tahunan"
+        );
+        const article5 = await getArticleBySlug(
+          "simbok-mineral-blok-tahunan-baru"
+        );
+        const article6 = await getArticleBySlug(
+          "penanaman-gama-umami-pakan-hijauan"
+        );
+        const article7 = await getArticleBySlug("cek-sehat-bersama-ptm");
+        const article8 = await getArticleBySlug(
+          "serumah-sehat-dari-rumah-toga"
+        );
+
+        setArticles([
+          article1,
+          article2,
+          article3,
+          article4,
+          article5,
+          article6,
+          article7,
+          article8,
+        ]);
+      } catch (err) {
+        console.error("Gagal memuat artikel", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchArticles();
+  }, []);
 
   const data = [
     {
@@ -33,10 +69,9 @@ export default async function TimelineDemo() {
             tepat guna serta edukasi digital yang mendukung kemandirian desa
             dengan berbasis mitigasi bencana.
           </p>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {article1 && <BlogCard {...article1} />}
-            {article2 && <BlogCard {...article2} />}
+            {articles[0] && <BlogCard {...articles[0]} />}
+            {articles[1] && <BlogCard {...articles[1]} />}
           </div>
         </div>
       ),
@@ -45,7 +80,6 @@ export default async function TimelineDemo() {
       title: "Sosial & Humaniora",
       content: (
         <div className="flex flex-col gap-6">
-          {/* Deskripsi Klaster */}
           <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-300">
             Program pengabdian dalam bidang sosial dan humaniora berfokus pada
             penguatan modal sosial, pemberdayaan masyarakat, serta peningkatan
@@ -53,11 +87,9 @@ export default async function TimelineDemo() {
             Pendekatan ini menekankan kolaborasi dan keberlanjutan dalam
             membangun desa.
           </p>
-
-          {/* Grid Card */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {article3 && <BlogCard {...article3} />}
-            {article4 && <BlogCard {...article4} />}
+            {articles[2] && <BlogCard {...articles[2]} />}
+            {articles[3] && <BlogCard {...articles[3]} />}
           </div>
         </div>
       ),
@@ -66,7 +98,6 @@ export default async function TimelineDemo() {
       title: "Agrokompleks",
       content: (
         <div className="flex flex-col gap-6">
-          {/* Deskripsi Klaster */}
           <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-300">
             Klaster agrokompleks berfokus pada sektor pertanian, peternakan, dan
             perikanan sebagai penopang utama perekonomian masyarakat. Program
@@ -74,21 +105,17 @@ export default async function TimelineDemo() {
             tepat guna, serta pengelolaan sumber daya alam yang berkelanjutan
             untuk mendukung ketahanan pangan desa.
           </p>
-
-          {/* Grid Card */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {article5 && <BlogCard {...article5} />}
-            {article6 && <BlogCard {...article6} />}
+            {articles[4] && <BlogCard {...articles[4]} />}
+            {articles[5] && <BlogCard {...articles[5]} />}
           </div>
         </div>
       ),
     },
-
     {
       title: "Medika",
       content: (
         <div className="flex flex-col gap-6">
-          {/* Deskripsi Klaster */}
           <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-300">
             Klaster medika berfokus pada kesehatan masyarakat melalui program
             preventif, promotif, kuratif, dan rehabilitatif. Kegiatan yang
@@ -96,33 +123,35 @@ export default async function TimelineDemo() {
             serta penerapan perilaku hidup bersih dan sehat untuk meningkatkan
             kualitas hidup masyarakat.
           </p>
-
-          {/* Grid Card */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {article7 && <BlogCard {...article7} />}
-            {article8 && <BlogCard {...article8} />}
+            {articles[6] && <BlogCard {...articles[6]} />}
+            {articles[7] && <BlogCard {...articles[7]} />}
           </div>
         </div>
       ),
     },
   ];
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full overflow-clip">
       <Navbar />
       <main className="flex flex-col items-center justify-center text-center h-screen">
         <div className="flex flex-col items-center justify-center text-center bg-primary text-secondary rounded-2xl p-6 m-4 h-[90%] w-[95%] max-w-8xl">
-          {/* Top Text */}
           <p className="text-sm mb-2">KKN PPM UGM 2025</p>
-
-          {/* Section Title */}
           <h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-2">
             Jejak Langkah <span className="italic">Langkara Talambo</span>
           </h1>
           <h1 className="text-2xl md:text-3xl font-medium leading-tight mb-6">
             Kisah Perjalanan, Dedikasi, dan Inspirasi
           </h1>
-
-          {/* Decorative element */}
           <div className="w-16 h-1 bg-gradient-to-r from-accent to-secondary my-4"></div>
         </div>
       </main>
